@@ -15,3 +15,5 @@ jsonlines
 nomic
 scikit-learn
 matplotlib
+read
+protobuf==3.20.*

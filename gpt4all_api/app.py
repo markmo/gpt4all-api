@@ -50,7 +50,8 @@ def setup_model(config):
     return model, tokenizer
 
 
-config = read_config('configs/generate/generate.yaml')
+dirname = os.path.basename(os.path.dirname(__file__))
+config = read_config(dirname + '/configs/generate/generate.yaml')
 
 model, tokenizer = setup_model(config)
 
