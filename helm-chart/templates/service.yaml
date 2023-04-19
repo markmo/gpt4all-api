@@ -1,0 +1,13 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: gpt4all-service
+  namespace: "{{ .Values.namespace }}"
+spec:
+  type: NodePort
+  selector:
+    app: gpt4all-service
+  ports:
+  - protocol: TCP
+    port: 5000
+    targetPort: 5000

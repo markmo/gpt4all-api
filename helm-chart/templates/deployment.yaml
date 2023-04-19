@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gpt4all-api
+  labels:
+    app: gpt4all-api
+  namespace: "{{ .Values.namespace }}"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gpt4all-api
+  template:
+    metadata:
+      labels:
+        app: gpt4all-api
+    spec:
+      imagePullSecrets:
+        - name: "{{ .Values.imagePullSecret }}"
+      containers:
+        - name: gpt4all-api-container
+          image: "{{ .Values.containerRegistry }}/gpt4all-api:{{ .Values.image.tag }}"
+          env:
+            - name: PORT
+              valueFrom:
+                configMapKeyRef:
+                  key: PORT
+                  name: gpt4all-config

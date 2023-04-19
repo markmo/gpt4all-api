@@ -1,0 +1,8 @@
+image:
+  tag: 0.1.0
+
+namespace: gpt4all
+
+imagePullSecret: gcr-secret
+
+containerRegistry: gcr.io/apt-phenomenon-243802
