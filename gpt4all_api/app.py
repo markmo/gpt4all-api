@@ -5,6 +5,7 @@ import traceback
 from dotenv import load_dotenv
 from flask import Flask, g, jsonify, request
 from transformers import AutoModelForCausalLM, AutoTokenizer
+from pathlib import Path
 from peft import PeftModelForCausalLM
 from read import read_config
 import torch
@@ -42,7 +43,7 @@ def setup_model(config):
         model.resize_token_embeddings(len(tokenizer))
 
     if config['lora']:
-        model = PeftModelForCausalLM.from_pretrained(model, config['lora_path'], device_map='auto', torch_dtype=torch.float16)
+        model = PeftModelForCausalLM.from_pretrained(model, config['lora_path'], device_map='auto', torch_dtype=torch.float16, offload_folder='/tmp/offload')
         model.to(dtype=torch.float16)
 
     print(f'Mem needed: {model.get_memory_footprint() / 1024 / 1024 / 1024:.2f} GB')

@@ -20,9 +20,21 @@ spec:
       containers:
         - name: gpt4all-api-container
           image: "{{ .Values.containerRegistry }}/gpt4all-api:{{ .Values.image.tag }}"
+          resources:
+            requests:
+              memory: "14Gi"
+            limits:
+              memory: "16Gi"
           env:
             - name: PORT
               valueFrom:
                 configMapKeyRef:
                   key: PORT
                   name: gpt4all-config
+          volumeMounts:
+            - mountPath: /root/.cache/huggingface/hub
+              name: model-cache-claim
+      volumes:
+        - name: model-cache-claim
+          persistentVolumeClaim:
+            claimName: model-cache-claim

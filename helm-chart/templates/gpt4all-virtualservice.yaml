@@ -1,0 +1,19 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: gpt4all-virtualservice
+  namespace: jhub
+spec:
+  gateways:
+  - europa-standalone-gateway
+  hosts:
+  - gpt4all.devsheds.io
+  http:
+  - match:
+    - uri:
+        prefix: /
+    route:
+    - destination:
+        host: gpt4all-service.gpt4all.svc.cluster.local
+        port:
+          number: 5000
